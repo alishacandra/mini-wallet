@@ -1,0 +1,171 @@
+/* =============================
+      GLOBAL STYLE
+============================= */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #ffd5ec, #ffb6d5, #ff9bcf);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #444;
+}
+
+/* Card / Container */
+.container {
+  width: 340px;
+  background: rgba(255, 255, 255, 0.35);
+  padding: 25px;
+  border-radius: 25px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(255, 109, 178, 0.25);
+  animation: fadeIn 0.8s ease;
+}
+
+/* Titles */
+h2, h3 {
+  color: #d83178;
+  text-align: center;
+  margin-top: 0;
+}
+
+/* =============================
+        LOGIN PAGE
+============================= */
+#loginPage input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  margin-bottom: 15px;
+  font-size: 16px;
+  background: #ffe6f3;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+#loginBtn {
+  width: 100%;
+  background: #ff6aaa;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#loginBtn:hover {
+  background: #ff589c;
+}
+
+/* Shake animation for wrong PIN */
+.shake {
+  animation: shakeAnim 0.4s;
+}
+
+@keyframes shakeAnim {
+  0% { transform: translateX(0);}
+  25% { transform: translateX(-5px);}
+  50% { transform: translateX(5px);}
+  75% { transform: translateX(-5px);}
+  100% { transform: translateX(0);}
+}
+
+/* =============================
+        WALLET APP
+============================= */
+.balanceBox {
+  text-align: center;
+  background: #ffe4f2;
+  padding: 15px;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  color: #c2186a;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  background: #ffeef7;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  background: #ff6cb2;
+  color: white;
+  border: none;
+  font-size: 15px;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #ff59a7;
+  box-shadow: 0 4px 12px rgba(255, 92, 150, 0.35);
+}
+
+/* =============================
+      PROGRESS BAR
+============================= */
+.progress-container {
+  width: 100%;
+  height: 14px;
+  background: #ffe3f2;
+  border-radius: 20px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff5fa8, #ff88c9);
+  width: 0%;
+  border-radius: 20px;
+  transition: width 0.4s ease-in-out;
+}
+
+/* =============================
+        NOTIFICATION
+============================= */
+#notif {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffb6da;
+  color: #7a0044;
+  padding: 10px 16px;
+  border-radius: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  font-size: 14px;
+  box-shadow: 0 5px 15px rgba(255, 99, 165, 0.25);
+}
+
+#notif.show {
+  opacity: 1;
+  bottom: 30px;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
