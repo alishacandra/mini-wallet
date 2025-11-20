@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Wallet Pink</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ================= LOGIN PAGE ================= -->
+  <div class="login-container" id="loginPage">
+    <h1 class="app-title">💕 Mini Wallet</h1>
+    <p class="app-sub">Masukkan PIN untuk masuk</p>
+
+    <input type="password" id="pinInput" maxlength="4" placeholder="••••" class="input">
+
+    <button id="loginBtn" class="btn">Masuk</button>
+
+    <p class="pin-note">PIN Default: <b>1234</b></p>
+  </div>
+
+
+  <!-- ================= MAIN WALLET ================= -->
+  <div class="wallet-container hidden" id="walletPage">
+
+    <h2 class="welcome">✨ Dompet Kamu</h2>
+
+    <!-- SALDO -->
+    <div class="balance-box">
+      <p>Saldo Kamu</p>
+      <h1 id="balanceDisplay">Rp 0</h1>
+    </div>
+
+    <!-- INPUT TRANSAKSI -->
+    <div class="card">
+      <h3>Tambah Uang</h3>
+      <input type="number" id="incomeInput" class="input" placeholder="Jumlah (Rp)">
+      <button id="addIncome" class="btn">Tambah</button>
+    </div>
+
+    <div class="card">
+      <h3>Catat Pengeluaran</h3>
+      <input type="number" id="expenseInput" class="input" placeholder="Jumlah (Rp)">
+      <button id="addExpense" class="btn pink">Catat</button>
+      <p class="limit-note">Daily limit: <b>Rp 50.000</b></p>
+    </div>
+
+    <!-- PROGRESS HARIAN -->
+    <div class="progress-box">
+      <p>Progress Pengeluaran Harian</p>
+      <div class="progress-outer">
+        <div class="progress-inner" id="dailyProgress"></div>
+      </div>
+      <p class="progress-text" id="dailyProgressText">0% digunakan</p>
+    </div>
+
+    <!-- PROGRESS BULANAN -->
+    <div class="progress-box">
+      <p>Progress Pengeluaran Bulanan</p>
+      <div class="progress-outer">
+        <div class="progress-inner month" id="monthlyProgress"></div>
+      </div>
+      <p class="progress-text" id="monthlyProgressText">0% dari limit digunakan</p>
+    </div>
+
+    <!-- RIWAYAT -->
+    <div class="history-box">
+      <h3>Riwayat Transaksi</h3>
+      <ul id="historyList"></ul>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
