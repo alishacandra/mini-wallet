@@ -19,50 +19,37 @@
     <button id="loginBtn" class="btn">Masuk</button>
 
     <p class="pin-note">PIN Default: <b>1234</b></p>
+    <div id="notif" class="notif"></div>
   </div>
 
 
   <!-- ================= MAIN WALLET ================= -->
-  <div class="wallet-container hidden" id="walletPage">
+  <div class="wallet-container hidden" id="appPage">
 
     <h2 class="welcome">✨ Dompet Kamu</h2>
 
     <!-- SALDO -->
     <div class="balance-box">
       <p>Saldo Kamu</p>
-      <h1 id="balanceDisplay">Rp 0</h1>
+      <h1 id="balance">Rp 0</h1>
     </div>
 
-    <!-- INPUT TRANSAKSI -->
+    <!-- BUTTON & INPUT -->
     <div class="card">
-      <h3>Tambah Uang</h3>
-      <input type="number" id="incomeInput" class="input" placeholder="Jumlah (Rp)">
-      <button id="addIncome" class="btn">Tambah</button>
+      <button id="addBtn" class="btn">Tambah Saldo</button>
+      <button id="noteBtn" class="btn pink">Catat Pengeluaran</button>
+      <button id="historyBtn" class="btn">Riwayat</button>
+      <button id="editSaldoBtn" class="btn">Ubah Saldo Awal</button>
     </div>
 
-    <div class="card">
-      <h3>Catat Pengeluaran</h3>
-      <input type="number" id="expenseInput" class="input" placeholder="Jumlah (Rp)">
-      <button id="addExpense" class="btn pink">Catat</button>
-      <p class="limit-note">Daily limit: <b>Rp 50.000</b></p>
-    </div>
-
-    <!-- PROGRESS HARIAN -->
+    <!-- PROGRESS BAR HARIAN -->
     <div class="progress-box">
       <p>Progress Pengeluaran Harian</p>
       <div class="progress-outer">
-        <div class="progress-inner" id="dailyProgress"></div>
+        <div class="progress-inner" id="progressBar"></div>
       </div>
-      <p class="progress-text" id="dailyProgressText">0% digunakan</p>
-    </div>
-
-    <!-- PROGRESS BULANAN -->
-    <div class="progress-box">
-      <p>Progress Pengeluaran Bulanan</p>
-      <div class="progress-outer">
-        <div class="progress-inner month" id="monthlyProgress"></div>
-      </div>
-      <p class="progress-text" id="monthlyProgressText">0% dari limit digunakan</p>
+      <p class="progress-text" id="progressPct">0% digunakan</p>
+      <p>Limit Harian: <b id="limitDisplay">Rp 50.000</b></p>
     </div>
 
     <!-- RIWAYAT -->
