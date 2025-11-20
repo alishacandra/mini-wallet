@@ -22,34 +22,36 @@
     <div id="notif" class="notif"></div>
   </div>
 
-
   <!-- ================= MAIN WALLET ================= -->
-  <div class="wallet-container hidden" id="appPage">
+  <div class="wallet-container hidden" id="walletPage">
 
     <h2 class="welcome">✨ Dompet Kamu</h2>
 
     <!-- SALDO -->
     <div class="balance-box">
       <p>Saldo Kamu</p>
-      <h1 id="balance">Rp 0</h1>
+      <h1 id="balanceDisplay">Rp 0</h1>
     </div>
 
-    <!-- BUTTON & INPUT -->
+    <!-- INPUT & BUTTON -->
     <div class="card">
-      <button id="addBtn" class="btn">Tambah Saldo</button>
-      <button id="noteBtn" class="btn pink">Catat Pengeluaran</button>
-      <button id="historyBtn" class="btn">Riwayat</button>
-      <button id="editSaldoBtn" class="btn">Ubah Saldo Awal</button>
+      <input type="number" id="incomeInput" class="input" placeholder="Tambah Saldo (Rp)">
+      <button id="addIncome" class="btn">Tambah Saldo</button>
+    </div>
+
+    <div class="card">
+      <input type="number" id="expenseInput" class="input" placeholder="Catat Pengeluaran (Rp)">
+      <button id="addExpense" class="btn pink">Catat Pengeluaran</button>
+      <p class="limit-note">Limit Harian: <b id="limitDisplay">Rp 50.000</b></p>
     </div>
 
     <!-- PROGRESS BAR HARIAN -->
     <div class="progress-box">
       <p>Progress Pengeluaran Harian</p>
       <div class="progress-outer">
-        <div class="progress-inner" id="progressBar"></div>
+        <div class="progress-inner" id="dailyProgress"></div>
       </div>
-      <p class="progress-text" id="progressPct">0% digunakan</p>
-      <p>Limit Harian: <b id="limitDisplay">Rp 50.000</b></p>
+      <p class="progress-text" id="dailyProgressText">0% digunakan</p>
     </div>
 
     <!-- RIWAYAT -->
@@ -63,3 +65,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
