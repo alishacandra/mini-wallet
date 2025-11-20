@@ -3,10 +3,11 @@
 // =========================
 let walletData = JSON.parse(localStorage.getItem("miniWallet")) || {
   balance: 0,
-  dailyLimit: 50000,            // batas harian default
+  dailyLimit: 50000,          // batas harian default
   spentToday: 0,
   lastDate: new Date().toDateString(),
-  pin: "1234"                   // PIN default
+  history: [],
+  pin: "1234"                 // PIN default
 };
 
 // Reset harian otomatis
@@ -20,7 +21,9 @@ function checkDailyReset() {
 }
 checkDailyReset();
 
-// Simpan ke localStorage
+// =========================
+//     SAVE TO LOCAL STORAGE
+// =========================
 function saveData() {
   localStorage.setItem("miniWallet", JSON.stringify(walletData));
   updateUI();
@@ -33,6 +36,7 @@ const loginPage = document.getElementById("loginPage");
 const appPage = document.getElementById("appPage");
 const pinInput = document.getElementById("pinInput");
 const loginBtn = document.getElementById("loginBtn");
+const notif = document.getElementById("notif");
 
 loginBtn.addEventListener("click", () => {
   if (pinInput.value === walletData.pin) {
@@ -45,90 +49,104 @@ loginBtn.addEventListener("click", () => {
 });
 
 // =========================
-//          UI
+//          UI ELEMENTS
 // =========================
 const balanceText = document.getElementById("balance");
-const limitText = document.getElementById("limitText");
-const spentText = document.getElementById("spentToday");
 const progressBar = document.getElementById("progressBar");
+const progressPct = document.getElementById("progressPct");
+const historyList = document.getElementById("historyList");
 
-// Update tampilan
+// =========================
+//       UPDATE UI
+// =========================
 function updateUI() {
   balanceText.textContent = "Rp " + walletData.balance.toLocaleString();
-  limitText.textContent = "Rp " + walletData.dailyLimit.toLocaleString();
-  spentText.textContent = "Rp " + walletData.spentToday.toLocaleString();
 
   // progress bar %
   let percent = (walletData.spentToday / walletData.dailyLimit) * 100;
   if (percent > 100) percent = 100;
-
   progressBar.style.width = percent + "%";
+  progressPct.textContent = Math.floor(percent) + "% digunakan";
+
+  // Update riwayat
+  historyList.innerHTML = "";
+  walletData.history.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.type} Rp ${item.amount.toLocaleString()} (${item.date})`;
+    historyList.appendChild(li);
+  });
 }
 updateUI();
 
 // =========================
-//      ADD & SPEND
+//      NOTIF FUNCTION
 // =========================
-const addAmount = document.getElementById("addAmount");
-const spendAmount = document.getElementById("spendAmount");
-const addBtn = document.getElementById("addBtn");
-const spendBtn = document.getElementById("spendBtn");
-const notif = document.getElementById("notif");
-
-// Notifikasi kecil aesthetic
 function showNotif(text) {
   notif.textContent = text;
   notif.classList.add("show");
   setTimeout(() => notif.classList.remove("show"), 1500);
 }
 
+// =========================
+//    BUTTON ACTIONS
+// =========================
+const addBtn = document.getElementById("addBtn");
+const noteBtn = document.getElementById("noteBtn");
+const historyBtn = document.getElementById("historyBtn");
+const editSaldoBtn = document.getElementById("editSaldoBtn");
+
 // Tambah saldo
 addBtn.addEventListener("click", () => {
-  let amount = parseInt(addAmount.value);
-  if (!amount || amount <= 0) return;
+  const amount = prompt("Masukkan jumlah saldo yang ingin ditambahkan (Rp):");
+  const val = parseInt(amount);
+  if (!val || val <= 0) return;
 
-  walletData.balance += amount;
+  walletData.balance += val;
+  walletData.history.push({ type: "Tambah Saldo", amount: val, date: new Date().toLocaleDateString() });
   saveData();
   showNotif("Saldo bertambah ✔");
-  addAmount.value = "";
 });
 
-// Pengeluaran
-spendBtn.addEventListener("click", () => {
-  let amount = parseInt(spendAmount.value);
-  if (!amount || amount <= 0) return;
+// Catat pengeluaran
+noteBtn.addEventListener("click", () => {
+  const amount = prompt("Masukkan jumlah pengeluaran hari ini (Rp):");
+  const val = parseInt(amount);
+  if (!val || val <= 0) return;
 
-  if (amount > walletData.balance) {
+  if (val > walletData.balance) {
     showNotif("Saldo tidak cukup ❌");
     return;
   }
 
-  // cek batas harian
-  if (walletData.spentToday + amount > walletData.dailyLimit) {
+  if (walletData.spentToday + val > walletData.dailyLimit) {
     showNotif("Melewati limit harian ❗");
     return;
   }
 
-  walletData.balance -= amount;
-  walletData.spentToday += amount;
+  walletData.balance -= val;
+  walletData.spentToday += val;
+  walletData.history.push({ type: "Pengeluaran", amount: val, date: new Date().toLocaleDateString() });
   saveData();
-
   showNotif("Pengeluaran tercatat ✔");
-  spendAmount.value = "";
 });
 
-// =========================
-//   UPDATE DAILY LIMIT
-// =========================
-const newLimitInput = document.getElementById("newLimitInput");
-const setLimitBtn = document.getElementById("setLimitBtn");
+// Tampilkan riwayat
+historyBtn.addEventListener("click", () => {
+  if (historyList.style.display === "block") {
+    historyList.style.display = "none";
+  } else {
+    historyList.style.display = "block";
+  }
+});
 
-setLimitBtn.addEventListener("click", () => {
-  let newLimit = parseInt(newLimitInput.value);
-  if (!newLimit || newLimit <= 0) return;
+// Ubah saldo awal
+editSaldoBtn.addEventListener("click", () => {
+  const amount = prompt("Masukkan saldo baru (Rp):");
+  const val = parseInt(amount);
+  if (!val || val < 0) return;
 
-  walletData.dailyLimit = newLimit;
+  walletData.balance = val;
+  walletData.history.push({ type: "Saldo diubah", amount: val, date: new Date().toLocaleDateString() });
   saveData();
-  showNotif("Limit harian diperbarui ✔");
-  newLimitInput.value = "";
+  showNotif("Saldo diubah ✔");
 });
