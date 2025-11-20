@@ -41,11 +41,10 @@ loginBtn.addEventListener("click", () => {
     loginPage.classList.add("hidden");
     walletPage.classList.remove("hidden");
     updateUI();
-    showNotif("Berhasil masuk ✔");
   } else {
+    showNotif("PIN salah ❌");
     pinInput.classList.add("shake");
     setTimeout(() => pinInput.classList.remove("shake"), 600);
-    showNotif("PIN salah ❌");
   }
 });
 
@@ -64,28 +63,17 @@ const expenseInput = document.getElementById("expenseInput");
 const addExpenseBtn = document.getElementById("addExpense");
 
 // =========================
-// NOTIFICATION
-// =========================
-function showNotif(text) {
-  notif.textContent = text;
-  notif.classList.add("show");
-  setTimeout(() => notif.classList.remove("show"), 1500);
-}
-
-// =========================
 // UPDATE UI
 // =========================
 function updateUI() {
-  // Saldo
   balanceDisplay.textContent = "Rp " + walletData.balance.toLocaleString();
 
-  // Progress harian
   let percent = (walletData.spentToday / walletData.dailyLimit) * 100;
   if (percent > 100) percent = 100;
   dailyProgress.style.width = percent + "%";
   dailyProgressText.textContent = Math.floor(percent) + "% digunakan";
 
-  // Riwayat transaksi
+  // Update riwayat
   historyList.innerHTML = "";
   walletData.history.slice().reverse().forEach(item => {
     const li = document.createElement("li");
@@ -95,29 +83,34 @@ function updateUI() {
 
   localStorage.setItem("miniWallet", JSON.stringify(walletData));
 }
+updateUI();
 
 // =========================
-// ADD INCOME
+// NOTIFIKASI
+// =========================
+function showNotif(text) {
+  notif.textContent = text;
+  notif.classList.add("show");
+  setTimeout(() => notif.classList.remove("show"), 1500);
+}
+
+// =========================
+// TAMBAH SALDO
 // =========================
 addIncomeBtn.addEventListener("click", () => {
   let amount = parseInt(incomeInput.value);
   if (!amount || amount <= 0) return;
 
   walletData.balance += amount;
-
-  walletData.history.push({
-    type: "Tambah",
-    amount: amount,
-    date: new Date().toLocaleString()
-  });
+  walletData.history.push({ type: "Tambah", amount: amount, date: new Date().toLocaleString() });
 
   incomeInput.value = "";
-  saveData();
   showNotif("Saldo bertambah ✔");
+  saveData();
 });
 
 // =========================
-// ADD EXPENSE
+// PENGELUARAN
 // =========================
 addExpenseBtn.addEventListener("click", () => {
   let amount = parseInt(expenseInput.value);
@@ -135,16 +128,11 @@ addExpenseBtn.addEventListener("click", () => {
 
   walletData.balance -= amount;
   walletData.spentToday += amount;
-
-  walletData.history.push({
-    type: "Pengeluaran",
-    amount: amount,
-    date: new Date().toLocaleString()
-  });
+  walletData.history.push({ type: "Pengeluaran", amount: amount, date: new Date().toLocaleString() });
 
   expenseInput.value = "";
-  saveData();
   showNotif("Pengeluaran tercatat ✔");
+  saveData();
 });
 
   
